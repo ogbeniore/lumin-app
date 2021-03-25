@@ -1,11 +1,15 @@
+import classNames from 'classnames'
+import { useState } from 'react'
 import Navbar from './components/Navbar'
 import Product from './components/Product'
+import Cart from './components/Cart'
 import './App.css';
 
 const numbers  = [1,2,3,4,5,6]
 function App() {
+  const [showCart, setShowCart] = useState(false)
   return (
-    <div className="App">
+    <div className={classNames("App", showCart ? "no-scroll" : '')}>
       <Navbar />
       <header className="App-header">
         <div className="container">
@@ -15,9 +19,10 @@ function App() {
       </header>
       <section className="container products">
         {
-          numbers.map((number) => <Product key={number} />)
+          numbers.map((number) => <Product key={number} setShowCart={setShowCart} />)
         }
       </section>
+      <Cart showCart={showCart} setShowCart={setShowCart} />
     </div>
   );
 }

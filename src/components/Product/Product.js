@@ -1,6 +1,6 @@
 import './Product.css'
 
-const Product = () => {
+const Product = ({ setShowCart }) => {
   return (
     <div className="product">
       <div className="product__image">
@@ -11,7 +11,7 @@ const Product = () => {
         <p>From $48.00</p>
       </div>
       <div className="product__action">
-        <button className="product__button">Add to Cart</button>
+        <button className="product__button" onClick={() => { setShowCart(true) }}>Add to Cart</button>
       </div>
     </div>
   )

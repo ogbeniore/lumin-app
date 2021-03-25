@@ -5,6 +5,10 @@
 body {
   background-color: #dee3df;
 }
+.no-scroll {
+  overflow: hidden;
+  height: 100vh;
+}
 .App-header {
   background: #ffffff;
   padding: 60px 0;
