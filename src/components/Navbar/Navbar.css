@@ -1,0 +1,35 @@
+a {
+  text-decoration: inherit;
+  color: inherit;
+}
+.nav {
+  background: #fff;
+  width: 100%;
+  padding: 16px 60px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.nav__menu {
+  display: flex;
+  align-items: center;
+}
+.logo {
+  font-size: 32px;
+  letter-spacing: 16px;
+  margin-right: 32px;
+}
+.nav__menu__item {
+  margin: 0 14px;
+  font-size: 18px;
+}
+.nav__button {
+  background: transparent;
+  border: none;
+  margin-right: 14px;
+  cursor: pointer;
+}
+.nav__button img {
+  width: 40px;
+  height: auto;
+}
