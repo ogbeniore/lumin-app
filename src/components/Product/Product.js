@@ -1,20 +1,20 @@
 import './Product.css'
 
-const Product = ({ setShowCart }) => {
+const product = ({ addToCart, productDetails }) => {
   return (
     <div className="product">
       <div className="product__image">
-        <img src="https://source.unsplash.com/random/3000x3000" alt="Product Name"/>
+        <img src={productDetails && productDetails.image_url} alt={productDetails && productDetails.title}/>
       </div>
       <div className="product__details">
-        <h3>Age Management Collection</h3>
-        <p>From $48.00</p>
+        <h3>{productDetails && productDetails.title}</h3>
+        <p>From ${ productDetails && productDetails.price }</p>
       </div>
       <div className="product__action">
-        <button className="product__button" onClick={() => { setShowCart(true) }}>Add to Cart</button>
+        <button className="product__button" onClick={() => { addToCart(productDetails.id) }}>Add to Cart</button>
       </div>
     </div>
   )
 }
 
-export default Product
+export default product
