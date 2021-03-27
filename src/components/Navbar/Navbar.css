@@ -28,8 +28,11 @@ a {
   border: none;
   margin-right: 14px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 .nav__button img {
   width: 40px;
   height: auto;
+  margin-right: 10px;
 }

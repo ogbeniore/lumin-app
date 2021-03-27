@@ -2,13 +2,14 @@ import { useState } from 'react'
 import classNames from 'classnames'
 import { useQuery, gql } from '@apollo/client';
 
+import { ShopContext } from './context/ShopContext'
+
 import Navbar from './components/Navbar'
-import Product from './components/Product'
+import PageHeader from './components/Header'
+import Shop from './components/Shop'
 import Cart from './components/Cart'
 
 import './App.css';
-
-const numbers  = [1,2,3,4,5,6]
 
 const PRODUCTS = gql`
   query GetProducts {
@@ -23,10 +24,11 @@ const PRODUCTS = gql`
 function App() {
   const [showCart, setShowCart] = useState(false)
   const [cart, updateCart] = useState([])
-  const { loading, error, data } = useQuery(PRODUCTS);
+  const { data = {} } = useQuery(PRODUCTS);
+  const { products = [] } = data
 
   const addToCart = (id) => {
-    const itemInProducts = data.products.find(product => product.id === id)
+    const itemInProducts = products.find(product => product.id === id)
     let itemInCart = cart.find(product => product.id === id)
     let cartCopy = cart
 
@@ -45,19 +47,12 @@ function App() {
   }
   return (
     <div className={classNames("App", showCart ? "no-scroll" : '')}>
-      <Navbar />
-      <header className="App-header">
-        <div className="container">
-          <h1>All Products</h1>
-          <p>A 360 degree look at Lumin</p>
-        </div>
-      </header>
-      <section className="container products">
-        { loading && 'Loading...' }
-        { error && 'Error while fetching products' }
-        {data && data.products && data.products.map(product => <Product productDetails={product} key={`product-${product.id}`} addToCart={addToCart} />) }
-      </section>
-      <Cart showCart={showCart} setShowCart={setShowCart} cart={cart} />
+      <ShopContext.Provider value={{ showCart, setShowCart, cart, addToCart, products }}>
+        <Navbar />
+        <PageHeader />
+        <Shop />
+        <Cart />
+      </ShopContext.Provider>
     </div>
   );
 }
