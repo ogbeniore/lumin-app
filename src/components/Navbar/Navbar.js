@@ -11,15 +11,15 @@ const Navbar = () => {
          LUMIN
         </div>
         <div className="nav__menu__item">
-          <a href="#">Shop</a>
+          <a href="/">Shop</a>
         </div>
         <div className="nav__menu__item">
-          <a href="#">Learn</a>
+          <a href="/">Learn</a>
         </div>
       </div>
       <div className="nav__menu">
         <div className="nav__menu__item">
-          <a href="#">Account</a>
+          <a href="/">Account</a>
         </div>
         <div className="nav__menu__item">
           <button className="nav__button">
