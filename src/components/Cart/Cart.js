@@ -14,7 +14,7 @@ const CURRENCIES = gql`
 
 const Cart = () => {
   const { data } = useQuery(CURRENCIES);
-  const { cart, showCart, setShowCart, addToCart } =  useContext(ShopContext)
+  const { cart, showCart, setShowCart, addToCart, removeFromCart, deleteProduct } =  useContext(ShopContext)
   const getTotal = () => {
     return cart.reduce((a, b) => a + (b.quantity * b.price), 0)
   }
@@ -37,7 +37,7 @@ const Cart = () => {
             {
               cart && cart.map(item => (
                 <div className="cart__item" key={`cart-item-${item.id}`}>
-                  <button className="cart__item__close">x</button>
+                  <button onClick={() => deleteProduct(item.id)} className="cart__item__close">x</button>
                   <div className="cart__item__row">
                     <p>{item && item.title}</p>
                     <div className="cart__item__image">
@@ -46,7 +46,7 @@ const Cart = () => {
                   </div>
                   <div className="cart__item__row">
                     <div className="counter">
-                      <button>-</button>
+                      <button onClick={() => removeFromCart(item.id)}>-</button>
                       <span>{item && item.quantity}</span>
                       <button onClick={() => addToCart(item.id)}>+</button>
                     </div>

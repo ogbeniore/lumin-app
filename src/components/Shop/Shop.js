@@ -9,7 +9,7 @@ const Shop = () => {
   const { products, addToCart } = useContext(ShopContext)
   return (
     <section className="container products">
-      { products ? products.map(product => (
+      { products.length ? products.map(product => (
           <Product
             productDetails={product}
             key={`product-${product.id}`}
