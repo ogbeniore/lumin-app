@@ -1,73 +1,31 @@
+import './Cart.css'
 import classNames from 'classnames'
-import { useQuery, gql } from '@apollo/client';
 import { useContext } from 'react'
+
 import { ShopContext } from '../../context/ShopContext'
 
-import './Cart.css'
-import { ReactComponent as Caret } from '../../assets/svg/caret.svg';
 
-const CURRENCIES = gql`
-  query GetCurrencies {
-    currency
-  }
-`;
+import CartHeader from './CartHeader';
+import CartItem from './CartItem';
+import CartFooter from './CartFooter';
 
 const Cart = () => {
-  const { data } = useQuery(CURRENCIES);
-  const { cart, showCart, setShowCart, addToCart, removeFromCart, deleteProduct } =  useContext(ShopContext)
-  const getTotal = () => {
-    return cart.reduce((a, b) => a + (b.quantity * b.price), 0)
-  }
+  const { cart, showCart } =  useContext(ShopContext)
   return (
     <div className={classNames("cart__container", showCart ? 'show' : '')}>
       <div className="cart__content">
         <div className="cart__body">
-          <div className="cart__nav">
-            <button onClick={() => { setShowCart(false) }}>
-              <Caret />
-            </button>
-            Your Cart
-          </div>
-          <select name="currency" id="currency" defaultValue="USD">
-            {
-              data && data.currency && data.currency.map(currency => <option value={currency} key={currency}>{currency}</option> )
-            }
-          </select>
+          <CartHeader />
           <section className="cart__list">
             {
               cart && cart.map(item => (
-                <div className="cart__item" key={`cart-item-${item.id}`}>
-                  <button onClick={() => deleteProduct(item.id)} className="cart__item__close">x</button>
-                  <div className="cart__item__row">
-                    <p>{item && item.title}</p>
-                    <div className="cart__item__image">
-                      <img src={item && item.image_url} alt={item && item.title}/>
-                    </div>
-                  </div>
-                  <div className="cart__item__row">
-                    <div className="counter">
-                      <button onClick={() => removeFromCart(item.id)}>-</button>
-                      <span>{item && item.quantity}</span>
-                      <button onClick={() => addToCart(item.id)}>+</button>
-                    </div>
-                    <p className="cart__item__price">
-                      ${ item && item.price }
-                    </p>
-                  </div>
-                </div>
+                <CartItem item={item} key={`cart-item-${item.id}`} />
               ))
             }
           </section>
         </div>
-        <div className="cart__footer">
-          <div className="cart__total">
-            <p>Sub Total</p>
-            <p>${getTotal()}</p>
-          </div>
-          <button className="cart__footer__button --alternate">make this a subscription ( save 20% )</button>
-          <button className="cart__footer__button">Proceed to checkout</button>
-        </div>
-      </div>
+        <CartFooter />
+      </div>  
     </div>
   )
 }
