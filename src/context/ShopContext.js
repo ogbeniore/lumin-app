@@ -9,7 +9,8 @@ export const ShopContext = createContext({
   deleteProduct: () => {},
   changeCurrency: () => {},
   currency: 'USD',
-  setCurrency: () => {}
+  setCurrency: () => {},
+  rePriceCart: () => {}
 })
 
 const PRODUCTS = gql`
@@ -62,6 +63,13 @@ export const ShopProvider = ({ children }) => {
     let cartCopy = [...cart]
     setCart(cartCopy.filter(item => item.id !== id))
   }
+  const rePriceCart = () => {
+    let cartCopy = [...cart]
+    cartCopy.forEach(item => {
+      item.price = products.find(product => product.id === item.id).price
+    })
+    setCart(cartCopy)
+  }
 
   return (
     <ShopContext.Provider 
@@ -74,7 +82,8 @@ export const ShopProvider = ({ children }) => {
         currency,
         setCurrency,
         removeFromCart,
-        deleteProduct }}>
+        deleteProduct,
+        rePriceCart }}>
       {children}
     </ShopContext.Provider>
   )
